@@ -13,6 +13,8 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
     public ServerHandler(String ip) {
         this.ip = ip;
+        log.info("ip address is: " + ip);
+
     }
 
     @Override

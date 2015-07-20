@@ -15,7 +15,6 @@ public class HttpServer  extends ChannelInitializer<SocketChannel> {
     @Override
     protected void initChannel(SocketChannel socketChannel) throws Exception {
         String ip = socketChannel.remoteAddress().getHostString();
-        log.info("ip address is: " + ip);
 
         ChannelPipeline pipeline = socketChannel.pipeline();
 
