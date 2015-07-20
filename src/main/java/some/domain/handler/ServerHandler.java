@@ -25,7 +25,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
             return;
 
         String uri = ((HttpRequest) msg).getUri();
-        FullHttpResponse response = new RequestHandler().getResponse(uri);
+        FullHttpResponse response = new RequestHandler(ip).getResponse(uri, msg.toString().length());
 
         if(response != null) {
             ctx.write(response).addListener(ChannelFutureListener.CLOSE);
