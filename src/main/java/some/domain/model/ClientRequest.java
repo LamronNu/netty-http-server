@@ -40,7 +40,7 @@ public class ClientRequest {
 
         ClientRequest that = (ClientRequest) o;
 
-        if (!dateTime.equals(that.dateTime)) return false;
+        //if (!dateTime.equals(that.dateTime)) return false;
         if (!fullUrl.equals(that.fullUrl)) return false;
 
         return true;
@@ -49,7 +49,7 @@ public class ClientRequest {
     @Override
     public int hashCode() {
         int result = fullUrl.hashCode();
-        result = 31 * result + dateTime.hashCode();
+        //result = 31 * result + dateTime.hashCode();
         return result;
     }
 
