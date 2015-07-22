@@ -190,7 +190,7 @@ public class Pages {
 //                .append("<hr>\n")
         /* - количество соединений, открытых в данный момент*/
                 .append("<p><b>Open connections: </b>\n")
-                .append(statistics.getOpenConnections().size())//???
+                .append(statistics.getOpenConnections())//.size())//???
                 .append("</p>\n");
 //                .append("<hr>\n");
         /* - в виде таблицы лог из 16 последних обработанных соединений, колонки
@@ -198,7 +198,7 @@ public class Pages {
         result.append("<p><b>Redirect`s details table: </b>\n")
                 .append("</p>\n")     //--1----------2----------3------------------4------------
                 .append("<table class=\"table table-bordered table-hover table-striped\"><tr><th>#</th><th>ip</th><th>uri</th><th>date-time</th>")
-                .append("<th>send bytes</th><th>receive bytes</th><th>speed</th></tr>\n")
+                .append("<th>send bytes</th><th>receive bytes</th><th>time spent, sec</th><th>speed</th></tr>\n")
         ;                       //--5---------------6-------------------7------------
         i = 0;
         List<ClientRequest> reverseRequests = new LinkedList<>(statistics.getRequests());
@@ -218,8 +218,11 @@ public class Pages {
                     .append("</td>\n<td>")
                     .append(request.getReceivedBytes())  //6
                     .append("</td>\n<td>")
-                    .append(request.getSpeed())//7
+                    .append(formatTime(request.getTimeSpent()))//7
+                    .append("</td>\n<td>")
+                    .append(request.getSpeed())//8
                     .append("</td>\n</tr>");
+
             if (i >= LIMIT_PROCESSED_CONNECTIONS)
                 break;
         }
@@ -228,6 +231,10 @@ public class Pages {
 
         return result.toString();
 
+    }
+
+    private static String formatTime(Long timeSpent) {
+        return String.format("%.3f",(Double) (timeSpent / 1000.));
     }
 
     private static String formatDateTime(DateTime dateTime) {

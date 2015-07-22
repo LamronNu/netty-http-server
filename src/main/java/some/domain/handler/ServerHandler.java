@@ -6,6 +6,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpRequest;
 import org.apache.log4j.Logger;
+import some.domain.model.ServerStatistics;
 
 public class ServerHandler extends ChannelInboundHandlerAdapter {
     private static final Logger log = Logger.getLogger(ServerHandler.class);
@@ -15,7 +16,6 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         this.ip = ip;
         log.info("--------------------");
         log.info("get request from ip: " + ip);
-
     }
 
     @Override
@@ -25,16 +25,19 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
             return;
 
         String uri = ((HttpRequest) msg).getUri();
+        ServerStatistics.incConn();
         FullHttpResponse response = new RequestHandler(ip).getResponse(uri, msg.toString().length());
 
         if(response != null) {
             ctx.write(response).addListener(ChannelFutureListener.CLOSE);
         }
+        //
     }
 
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
         ctx.flush();
+        ServerStatistics.decrConn();
     }
 
     @Override
@@ -42,5 +45,6 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
             throws Exception {
         log.error("ex in handler!", cause);
         ctx.close();
+        //ServerStatistics.decrConn();
     }
 }

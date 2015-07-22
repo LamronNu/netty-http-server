@@ -17,6 +17,7 @@ public class ClientRequest {
     private Integer receivedBytes;
     private Integer sendBytes;
     private Double speed;//???????
+    private long timeSpent;
 
     public ClientRequest(String fullUrl) {
         if (fullUrl == null || "".equals(fullUrl))
@@ -31,6 +32,7 @@ public class ClientRequest {
         this.receivedBytes = 0;
         this.sendBytes = 0;
         this.speed = 0.;
+        this.timeSpent = 0;
     }
 
     @Override
@@ -39,18 +41,13 @@ public class ClientRequest {
         if (o == null || getClass() != o.getClass()) return false;
 
         ClientRequest that = (ClientRequest) o;
+        return fullUrl.equals(that.fullUrl);
 
-        //if (!dateTime.equals(that.dateTime)) return false;
-        if (!fullUrl.equals(that.fullUrl)) return false;
-
-        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = fullUrl.hashCode();
-        //result = 31 * result + dateTime.hashCode();
-        return result;
+        return fullUrl.hashCode();
     }
 
     public String getFullUrl() {
@@ -103,5 +100,13 @@ public class ClientRequest {
 
     public boolean existsRedirect() {
         return redirectTo != null && !"".equals(redirectTo);
+    }
+
+    public Long getTimeSpent() {
+        return timeSpent;
+    }
+
+    public void fixTimeSpent(){
+        this.timeSpent = new DateTime().getMillis() - dateTime.getMillis();
     }
 }

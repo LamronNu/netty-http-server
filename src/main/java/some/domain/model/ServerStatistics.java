@@ -15,7 +15,7 @@ public class ServerStatistics {
     private Set<Client> clients;
     private Set<ClientRequest> uniqueRequests;
     private Map<ClientRequest, Integer> uniqueRedirects;
-    private Set openConnections;
+    private static volatile int openConnections;
 
     private static ServerStatistics instance;
 
@@ -24,7 +24,7 @@ public class ServerStatistics {
         this.requests = new LinkedList<>();
         this.clients = new HashSet<>();
         this.uniqueRequests = new HashSet<>();
-        this.openConnections = new HashSet();
+        openConnections = 0;
         this.uniqueRedirects = new HashMap<>();
     }
 
@@ -49,6 +49,7 @@ public class ServerStatistics {
         Client client = getClientByIp(ip);
         client.addRequest(request);
         request.setClient(client);
+        request.fixTimeSpent();
         requests.add(request);
         boolean isNewRequest = uniqueRequests.add(request);
         if (request.existsRedirect()) {
@@ -80,7 +81,15 @@ public class ServerStatistics {
         return uniqueRedirects;
     }
 
-    public Collection getOpenConnections() {//todo
+    public int getOpenConnections() {
         return openConnections;
+    }
+
+    public static synchronized void incConn() {
+        openConnections++;
+    }
+
+    public static synchronized void decrConn() {
+        openConnections--;
     }
 }
