@@ -23,9 +23,9 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
         if(!(msg instanceof HttpRequest))
             return;
+        ServerStatistics.incConn();
 
         String uri = ((HttpRequest) msg).getUri();
-        ServerStatistics.incConn();
         FullHttpResponse response = new RequestHandler(ip).getResponse(uri, msg.toString().length());
 
         if(response != null) {

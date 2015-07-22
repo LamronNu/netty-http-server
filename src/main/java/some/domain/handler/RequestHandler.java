@@ -24,9 +24,9 @@ public class RequestHandler {
     }
 
     public FullHttpResponse getResponse(String url, int receiveBytes) throws InterruptedException {
-        log.info("uri=" + url);
         //prepare request obj
         ClientRequest request = new ClientRequest(url);
+        log.info("uri=" + url);
         request.setReceivedBytes(receiveBytes);
 
         FullHttpResponse response = null;
@@ -88,7 +88,7 @@ public class RequestHandler {
                 Unpooled.copiedBuffer(table, CharsetUtil.US_ASCII));
     }
 
-    private String getHtmlResponse(String body, String pageName){
+    private String getHtmlResponse(String body, String pageName) {
         return htmlTemplate(pageName).replace("%body%", body);
     }
 

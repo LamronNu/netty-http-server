@@ -142,10 +142,15 @@ public class Pages {
                 .append("<p><b>Total unique request`s count: </b>\n")
                 .append(statistics.getUniqueRequests().size())
                 .append("</p>\n")
+        /* - количество соединений, открытых в данный момент*/
+                .append("<p><b>Open connections: </b>\n")
+                .append(statistics.getOpenConnections())//.size())//???
+                .append("</p>\n")
+//                .append("<hr>\n");
 //                .append("<hr>\n")
         /* - счетчик запросов на каждый IP в виде таблицы с колонкам и IP,
              кол-во запросов, время последнего запроса*/
-                .append("<p><b>Request`s details table: </b>\n")
+                .append("<p>Table 1. <b>Request`s details table: </b>\n")
                 .append("</p>\n")
                 .append("<table class=\"table table-bordered table-hover table-striped\"><tr>")
                 .append("<th>#</th><th>IP</th><th>requests</th><th>unique requests</th><th>last date</th></tr>\n")
@@ -169,7 +174,7 @@ public class Pages {
 //                .append("<hr>\n")
         /* - количество переадресаций по url'ам  в виде таблицы, с колонками
             url, кол-во переадресация*/
-                .append("<p><b>Redirect`s details table: </b>\n")
+                .append("<p>Table 2. <b>Redirect`s details table: </b>\n")
                 .append("</p>\n")     //--1---------------2---------------3------------------4------------
                 .append("<table class=\"table table-bordered table-hover table-striped\"><tr><th>#</th><th>redirect to</th><th>count</th><th>last date</th></tr>\n")
         ;
@@ -187,18 +192,13 @@ public class Pages {
                     .append("</td>\n</tr>");
         }
         result.append("</table>\n")
-//                .append("<hr>\n")
-        /* - количество соединений, открытых в данный момент*/
-                .append("<p><b>Open connections: </b>\n")
-                .append(statistics.getOpenConnections())//.size())//???
-                .append("</p>\n");
-//                .append("<hr>\n");
+
         /* - в виде таблицы лог из 16 последних обработанных соединений, колонки
             src_ip, URI, timestamp,  sent_bytes, received_bytes, speed (bytes/sec)        */
-        result.append("<p><b>Redirect`s details table: </b>\n")
+                .append("<p>Table 3. <b>Log of last 16 requests: </b>\n")
                 .append("</p>\n")     //--1----------2----------3------------------4------------
                 .append("<table class=\"table table-bordered table-hover table-striped\"><tr><th>#</th><th>ip</th><th>uri</th><th>date-time</th>")
-                .append("<th>send bytes</th><th>receive bytes</th><th>time spent, sec</th><th>speed</th></tr>\n")
+                .append("<th>send bytes</th><th>receive bytes</th><th>time spent, sec</th><th>speed, bytes/sec</th></tr>\n")
         ;                       //--5---------------6-------------------7------------
         i = 0;
         List<ClientRequest> reverseRequests = new LinkedList<>(statistics.getRequests());
@@ -220,7 +220,7 @@ public class Pages {
                     .append("</td>\n<td>")
                     .append(formatTime(request.getTimeSpent()))//7
                     .append("</td>\n<td>")
-                    .append(request.getSpeed())//8
+                    .append(String.format("%.2f", request.getSpeed()))//8
                     .append("</td>\n</tr>");
 
             if (i >= LIMIT_PROCESSED_CONNECTIONS)

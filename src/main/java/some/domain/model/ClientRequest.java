@@ -83,6 +83,7 @@ public class ClientRequest {
     }
 
     public Double getSpeed() {
+        speed = receivedBytes + sendBytes / (timeSpent / 1000.);
         return speed;
     }
 
@@ -107,6 +108,7 @@ public class ClientRequest {
     }
 
     public void fixTimeSpent(){
-        this.timeSpent = new DateTime().getMillis() - dateTime.getMillis();
+        long diff = new DateTime().getMillis() - dateTime.getMillis();
+        this.timeSpent = diff == 0 ? 1 : diff;
     }
 }
