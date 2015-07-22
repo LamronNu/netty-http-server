@@ -1,5 +1,7 @@
 package some.domain.handler;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import some.domain.model.Client;
 import some.domain.model.ClientRequest;
 import some.domain.model.ServerStatistics;
@@ -130,7 +132,7 @@ public class Pages {
         StringBuilder result = new StringBuilder("<h1>Server Statistics</h1><br/>\n")
                 .append("<br/>\n")
                 .append("<p><b>Server starts on: </b>\n")
-                .append(statistics.getStartOn().toLocalDateTime().toString(DATE_TIME_PATTERN))
+                .append(formatDateTime(statistics.getStartOn()))
                 .append("</p>\n")
 //                .append("<hr>\n")
         /* - общее количество запросов*/
@@ -160,7 +162,7 @@ public class Pages {
                     .append("</td>\n<td>")
                     .append(client.getUniqueRequestsCount())//4
                     .append("</td>\n<td>")
-                    .append(client.getLastDateTime().toString(DATE_TIME_PATTERN))//5
+                    .append(formatDateTime(client.getLastDateTime()))//5
                     .append("</td>\n</tr>");
         }
         result.append("</table>\n")
@@ -181,7 +183,7 @@ public class Pages {
                     .append("</td>\n<td>")
                     .append(statistics.getUniqueRedirects().get(redirect))  //3
                     .append("</td>\n<td>")
-                    .append(redirect.getDateTime().toLocalDateTime().toString(DATE_TIME_PATTERN))//4
+                    .append(formatDateTime(redirect.getDateTime()))//4
                     .append("</td>\n</tr>");
         }
         result.append("</table>\n")
@@ -210,7 +212,7 @@ public class Pages {
                     .append("</td>\n<td>")
                     .append(request.getFullUrl())  //3
                     .append("</td>\n<td>")
-                    .append(request.getDateTime().toString(DATE_TIME_PATTERN))//4
+                    .append(formatDateTime(request.getDateTime()))//4
                     .append("</td>\n<td>")
                     .append(request.getSendBytes()) //5
                     .append("</td>\n<td>")
@@ -226,5 +228,9 @@ public class Pages {
 
         return result.toString();
 
+    }
+
+    private static String formatDateTime(DateTime dateTime) {
+        return dateTime.toDateTime(DateTimeZone.forOffsetHours(3)).toString(DATE_TIME_PATTERN);
     }
 }
