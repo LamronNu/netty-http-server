@@ -8,6 +8,8 @@
     <groupId>com.example</groupId>
     <artifactId>netty-http-server</artifactId>
     <version>1.0</version>
+    <packaging>jar</packaging>
+
 
     <dependencies>
         <dependency>
@@ -33,12 +35,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+
                 <version>3.3</version>
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
                     <encoding>Cp1252</encoding>
-
+<compilerArgument>exec.mainClass="some.domain.StartHttpServer"</compilerArgument>
                 </configuration>
             </plugin>
         </plugins>
