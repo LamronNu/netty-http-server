@@ -41,7 +41,6 @@
                     <source>1.7</source>
                     <target>1.7</target>
                     <encoding>Cp1252</encoding>
-<compilerArgument>exec.mainClass="some.domain.StartHttpServer"</compilerArgument>
                 </configuration>
             </plugin>
         </plugins>
