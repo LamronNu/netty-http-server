@@ -1,0 +1,1 @@
+web: target/netty-http-server-1.0.jar
