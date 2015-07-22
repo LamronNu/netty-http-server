@@ -1,1 +1,1 @@
-web: java -cp target/classes:target/dependency/* some.domain.StartHttpServer
+web: java -cp target/classes:target/dependency/* netty-http-server-1.0.jar
