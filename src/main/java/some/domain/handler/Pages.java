@@ -94,14 +94,6 @@ public class Pages {
                         //redirect
                 .append("<b>Redirect to...</b>")
                 .append("<div class=\"list-group\">\n")
-//                        "  <a href=\"#\" class=\"list-group-item active\">\n" +
-//                        "    Cras justo odio\n" +
-//                        "  </a>\n" +
-//                        "  <a href=\"#\" class=\"list-group-item\">Dapibus ac facilisis in</a>\n" +
-//                        "  <a href=\"#\" class=\"list-group-item\">Morbi leo risus</a>\n" +
-//                        "  <a href=\"#\" class=\"list-group-item\">Porta ac consectetur ac</a>\n" +
-//                        "  <a href=\"#\" class=\"list-group-item\">Vestibulum at eros</a>\n" +
-
                 .append("<a href=\"/redirect?url=www.github.com/LamronNu/netty-http-server\" class=\"list-group-item\" target=_blank>Github source</a>")
                 .append("<a href=\"/redirect?url=www.github.com/LamronNu\"\" class=\"list-group-item\" target=_blank>Github profile</a>")
                 .append("<a href=\"/redirect?url=www.linkedin.com/profile/view?id=226275019&locale=en_US\" class=\"list-group-item\" target=_blank>LinkedIn profile</a>")
@@ -138,7 +130,7 @@ public class Pages {
         StringBuilder result = new StringBuilder("<h1>Server Statistics</h1><br/>\n")
                 .append("<br/>\n")
                 .append("<p><b>Server starts on: </b>\n")
-                .append(statistics.getStartOn().toString(DATE_TIME_PATTERN))
+                .append(statistics.getStartOn().toLocalDateTime().toString(DATE_TIME_PATTERN))
                 .append("</p>\n")
 //                .append("<hr>\n")
         /* - общее количество запросов*/
@@ -189,7 +181,7 @@ public class Pages {
                     .append("</td>\n<td>")
                     .append(statistics.getUniqueRedirects().get(redirect))  //3
                     .append("</td>\n<td>")
-                    .append(redirect.getDateTime().toString(DATE_TIME_PATTERN))//4
+                    .append(redirect.getDateTime().toLocalDateTime().toString(DATE_TIME_PATTERN))//4
                     .append("</td>\n</tr>");
         }
         result.append("</table>\n")
