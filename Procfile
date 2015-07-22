@@ -1,1 +1,1 @@
-web: target/classes/some/domain/StartHttpServer
+web: target/netty-http-server-1.0.jar
