@@ -1,1 +1,1 @@
-java -jar target\netty-http-server-1.0.jar
+web: java -jar target\netty-http-server-1.0.jar
