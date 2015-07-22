@@ -1,1 +1,1 @@
-web: java -cp target/classes:target/dependency/* netty-http-server-1.0.jar
+java -jar target\netty-http-server-1.0.jar
