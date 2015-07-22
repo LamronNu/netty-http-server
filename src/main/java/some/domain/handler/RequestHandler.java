@@ -119,19 +119,7 @@ public class RequestHandler {
                 .append("</div>\n")
                 .append(footer());
 
-                /*<div id="main" ng-app>
-    <!-- ¬сем переменным классов в меню навигации будет присвоено значение "active". ‘ункци€ $event.preventDefault() выводит страницу, котора€ была открыта по ссылке. -->
-    <nav class="{{active}}" ng-click="$event.preventDefault()">
-        <!--  огда пункт меню открыт по ссылке, мы устанавливаем активные переменные -->
-        <a href="#" class="home" ng-click="active='home'">Home</a>
-        <a href="#" class="projects" ng-click="active='projects'">Projects</a>
-        <a href="#" class="services" ng-click="active='services'">Services</a>
-        <a href="#" class="contact" ng-click="active='contact'">Contact</a>
-    </nav>
-    <!-- ng-show выводит элемент, если значение переменной в кавычках соответствует истине. ng- hide Ц скрывает элемент, если наоборот. “ак как изначально  активна€ переменна€ не установлена, то сперва на экране будет виден следующий текст -->
-    <p ng-hide="active">Please click a menu item</p>
-    <p ng-show="active">You chose <b>{{active}}</b></p>
-</div>*/
+
         return result.toString();
     }
 
