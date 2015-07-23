@@ -11,6 +11,7 @@ import some.domain.model.ServerStatistics;
 public class ServerHandler extends ChannelInboundHandlerAdapter {
     private static final Logger log = Logger.getLogger(ServerHandler.class);
     private final String ip;
+    private boolean isConnOpen = false;
 
     public ServerHandler(String ip) {
         this.ip = ip;
@@ -20,8 +21,10 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        ServerStatistics.getInstance().incConn();
-
+        if (!isConnOpen) {
+            ServerStatistics.getInstance().incConn();
+            isConnOpen = true;
+        }
         if(!(msg instanceof HttpRequest))
             return;
 
@@ -37,7 +40,10 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
         ctx.flush();
-        ServerStatistics.getInstance().decrConn();
+        if (isConnOpen) {
+            ServerStatistics.getInstance().decrConn();
+            isConnOpen = false;
+        }
     }
 
     @Override
@@ -45,6 +51,9 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
             throws Exception {
         log.error("ex in handler!", cause);
         ctx.close();
-        ServerStatistics.getInstance().decrConn();
+        if (isConnOpen) {
+            ServerStatistics.getInstance().decrConn();
+            isConnOpen = false;
+        }
     }
 }
