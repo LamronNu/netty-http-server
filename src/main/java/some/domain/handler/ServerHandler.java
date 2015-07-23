@@ -23,7 +23,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
         if(!(msg instanceof HttpRequest))
             return;
-        ServerStatistics.incConn();
+        ServerStatistics.getInstance().incConn();
 
         String uri = ((HttpRequest) msg).getUri();
         FullHttpResponse response = new RequestHandler(ip).getResponse(uri, msg.toString().length());
@@ -37,7 +37,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
         ctx.flush();
-        ServerStatistics.decrConn();
+        ServerStatistics.getInstance().decrConn();
     }
 
     @Override
