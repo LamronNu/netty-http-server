@@ -77,7 +77,7 @@ public class RequestHandler {
         log.info("--------------------");
 
         return new DefaultFullHttpResponse(HTTP_1_1, OK,
-                Unpooled.copiedBuffer(table, CYRILLIC_CHARSET));
+                Unpooled.copiedBuffer(table, DEFAULT_CHARSET));
     }
 
     private FullHttpResponse getIndexPageResponse() {

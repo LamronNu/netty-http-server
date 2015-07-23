@@ -31,7 +31,7 @@ public class Pages {
 
 
     public static String htmlTemplate(String pageName){
-        return (new StringBuilder("<!DOCTYPE html><html lang=\"en\">\n<head>\n")
+        return (new StringBuilder("<!DOCTYPE html><html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n")
                 .append("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css\">\n")
                 .append("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css\">\n")
                 .append("<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js\"></script>\n")
