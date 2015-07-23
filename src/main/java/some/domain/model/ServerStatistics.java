@@ -1,12 +1,10 @@
 package some.domain.model;
 
-import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 
 import java.util.*;
 
 public class ServerStatistics {
-    private static final Logger log = Logger.getLogger(ServerStatistics.class);
 
 
     private DateTime startOn;
@@ -29,7 +27,7 @@ public class ServerStatistics {
     }
 
     public static ServerStatistics getInstance() {
-        synchronized (ServerStatistics.class){//??
+        synchronized (ServerStatistics.class){
             if (instance == null){
                 instance = new ServerStatistics();
             }

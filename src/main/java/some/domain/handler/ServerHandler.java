@@ -34,7 +34,6 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         if(response != null) {
             ctx.write(response).addListener(ChannelFutureListener.CLOSE);
         }
-        //
     }
 
     @Override

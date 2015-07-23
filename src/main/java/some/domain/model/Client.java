@@ -1,12 +1,10 @@
 package some.domain.model;
 
-import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 
 import java.util.*;
 
 public class Client {
-    private static final Logger log = Logger.getLogger(Client.class);
 
     private String ip;
     private Queue<ClientRequest> requests;
@@ -22,11 +20,8 @@ public class Client {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Client client = (Client) o;
-
         if (!ip.equals(client.ip)) return false;
-
         return true;
     }
 

@@ -9,15 +9,11 @@ public class ClientRequest {
     private String fullUrl;
     private DateTime dateTime;
     private String redirectTo;
-    private Client client;
-
-
-
-    //sent_bytes, received_bytes, speed (bytes/sec)
     private Integer receivedBytes;
     private Integer sendBytes;
-    private Double speed;//???????
+    private Double speed;
     private long timeSpent;
+    private Client client;
 
 
 

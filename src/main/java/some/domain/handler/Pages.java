@@ -161,8 +161,8 @@ public class Pages {
                 .append("    </p>\n")
                 .append("    <h3>Реализация</h3>\n")
                 .append("    <p>\n")
-                .append("        Описана в\n")
-                .append("        <a href=\"/redirect?url=www.github.com/LamronNu/netty-http-server\" target=\"_blank\">исходниках</a> гитхаба: \n")
+                .append("        Описана в wiki \n")
+                .append("        <a href=\"/redirect?url=www.github.com/LamronNu/netty-http-server\" target=\"_blank\">исходного кода</a> на гитхабе: \n")
                 .append("        <a href=\"/redirect?url=www.github.com/LamronNu/netty-http-server/wiki/2.-Implementation\" target=\"_blank\">тут</a> (реализация)\n")
                 .append("        и <a href=\"/redirect?url=www.github.com/LamronNu/netty-http-server/wiki/3.-Screenshots\" target=\"_blank\">тут</a> (скриншоты).\n")
                 .append("    </p>\n")
@@ -180,7 +180,6 @@ public class Pages {
                 .append("<p><b>Server starts on: </b>\n")
                 .append(formatDateTime(statistics.getStartOn()))
                 .append("</p>\n")
-//                .append("<hr>\n")
         /* - общее количество запросов*/
                 .append("<p><b>Total request`s count: </b>\n")
                 .append(statistics.getRequests().size())
@@ -192,8 +191,6 @@ public class Pages {
                 .append("<p><b>Open connections: </b>\n")
                 .append(statistics.getOpenConnections())//.size())//???
                 .append("</p>\n")
-//                .append("<hr>\n");
-//                .append("<hr>\n")
         /* - счетчик запросов на каждый IP в виде таблицы с колонкам и IP,
              кол-во запросов, время последнего запроса*/
                 .append("<p>Table 1. <b>Request`s details table: </b>\n")
@@ -217,7 +214,6 @@ public class Pages {
                     .append("</td>\n</tr>");
         }
         result.append("</table>\n")
-//                .append("<hr>\n")
         /* - количество переадресаций по url'ам  в виде таблицы, с колонками
             url, кол-во переадресация*/
                 .append("<p>Table 2. <b>Redirect`s details table: </b>\n")

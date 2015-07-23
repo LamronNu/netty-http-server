@@ -11,7 +11,13 @@
     <packaging>jar</packaging>
 
     <properties>
+        <java.version>1.7</java.version>
         <encoding>UTF-8</encoding>
+        <netty.version>4.0.29.Final</netty.version>
+        <log4j.version>1.2.17</log4j.version>
+        <joda-time.version>2.6</joda-time.version>
+        <maven-compiler.version>3.3</maven-compiler.version>
+        <maven-jar.version>2.3</maven-jar.version>
     </properties>
 
 
@@ -19,18 +25,18 @@
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
-            <version>4.0.29.Final</version>
+            <version>${netty.version}</version>
             <!--<scope>compile</scope>-->
         </dependency>
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
+            <version>${log4j.version}</version>
         </dependency>
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
-            <version>2.6</version>
+            <version>${joda-time.version}</version>
         </dependency>
     </dependencies>
 
@@ -40,14 +46,14 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
 
-                <version>3.3</version>
+                <version>${maven-compiler.version}</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                     <encoding>${encoding}</encoding>
                 </configuration>
             </plugin>
-<!--deploy-->
+            <!--deploy-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -70,7 +76,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.3</version>
+                <version>${maven-jar.version}</version>
                 <configuration>
                     <archive>
                         <manifest>

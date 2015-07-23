@@ -26,7 +26,6 @@ public class StartHttpServer {
                     .group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
                     .childHandler(new HttpServer());
-            //Create a new Channel and bind it
             bootstrap.bind(port).sync().channel().closeFuture().sync();
         } finally {
             workerGroup.shutdownGracefully();
