@@ -25,7 +25,7 @@ public class Pages {
     //templates
     public static final String HELLO_TEMPLATE = "Hello, World!";
     public static final String NOT_FOUND_TEMPLATE = "404. Not found.";
-    public static final String ABOUT_TEMPLATE = getInfoPage();
+    public static final String INFO_TEMPLATE = getInfoPage();
     public static final String INDEX_TEMPLATE = getIndexPage();
 
 
@@ -86,14 +86,14 @@ public class Pages {
 //                .append("<br/>")
                 .append("<a href=/redirect?url=")
                 .append("www.github.com/LamronNu")
-                .append("> Github profile.</a>\n")
+                .append(" target=_blank> Github profile </a>\n")
                 .append("<br/>")
                 .append("</div>\n</div></html>\\n")
         ).toString();
     }
 
     public static String getIndexPage() {
-        return (new StringBuilder("<h1>Welcome to simple http-server!</h1><br/>\n")
+        return (new StringBuilder("<h1>Welcome to the simple http-server!</h1><br/>\n")
                 .append("<div class=\"list-group\"><b>Go to... </b>")
                         //links
                 .append("<a href=\"/info\" class=\"list-group-item\">Info page</a>")

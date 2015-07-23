@@ -71,7 +71,7 @@ public class RequestHandler {
     }
 
     private FullHttpResponse getInfoPageResponse() {
-        String table = getHtmlResponse(getInfoPage(), INFO_PAGE);
+        String table = getHtmlResponse(INFO_TEMPLATE, INFO_PAGE);
         log.info("response is: info page" );
         log.info("--------------------");
 
@@ -80,7 +80,7 @@ public class RequestHandler {
     }
 
     private FullHttpResponse getIndexPageResponse() {
-        String table = getHtmlResponse(getIndexPage(), INDEX_PAGE);
+        String table = getHtmlResponse(INDEX_TEMPLATE, INDEX_PAGE);
         log.info("response is: index page" );
         log.info("--------------------");
 
