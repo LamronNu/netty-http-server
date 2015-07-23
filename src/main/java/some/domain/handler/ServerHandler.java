@@ -45,6 +45,6 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
             throws Exception {
         log.error("ex in handler!", cause);
         ctx.close();
-        //ServerStatistics.decrConn();
+        ServerStatistics.getInstance().decrConn();
     }
 }
