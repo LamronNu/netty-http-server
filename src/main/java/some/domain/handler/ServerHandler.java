@@ -20,10 +20,10 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        ServerStatistics.getInstance().incConn();
 
         if(!(msg instanceof HttpRequest))
             return;
-        ServerStatistics.getInstance().incConn();
 
         String uri = ((HttpRequest) msg).getUri();
         FullHttpResponse response = new RequestHandler(ip).getResponse(uri, msg.toString().length());
