@@ -49,6 +49,7 @@ public class RequestHandler {
                 break;
             case"/hello":
                 response = getHelloWorldResponse();
+                request.setResponse(HELLO_PAGE);
                 break;
             case "/redirect":///redirect?url=<url>
                 String redirectTo = "http://" + url.replace("/redirect?url=", "");
