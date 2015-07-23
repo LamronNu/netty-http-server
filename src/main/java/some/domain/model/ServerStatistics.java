@@ -81,7 +81,7 @@ public class ServerStatistics {
         return uniqueRedirects;
     }
 
-    public int getOpenConnections() {
+    public synchronized int getOpenConnections() {
         return openConnections;
     }
 

@@ -9,6 +9,8 @@ import org.apache.log4j.Logger;
 import some.domain.model.ClientRequest;
 import some.domain.model.ServerStatistics;
 
+import java.nio.charset.Charset;
+
 import static some.domain.handler.Pages.*;
 
 import static io.netty.handler.codec.http.HttpResponseStatus.*;
@@ -16,6 +18,8 @@ import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
 public class RequestHandler {
     private static final Logger log = Logger.getLogger(RequestHandler.class);
+    public static final Charset DEFAULT_CHARSET = CharsetUtil.UTF_8;
+    public static final Charset CYRILLIC_CHARSET = Charset.forName("Cp1251");
     private String ip;
     public static final int COUNT_MS = 10;
 
@@ -37,9 +41,11 @@ public class RequestHandler {
             case"/":
             case "/index":
                 response = getIndexPageResponse();
+                request.setResponse(INDEX_PAGE);
                 break;
             case "/info":
                 response = getInfoPageResponse();
+                request.setResponse(INFO_PAGE);
                 break;
             case"/hello":
                 response = getHelloWorldResponse();
@@ -48,12 +54,15 @@ public class RequestHandler {
                 String redirectTo = "http://" + url.replace("/redirect?url=", "");
                 request.setRedirectTo(redirectTo);
                 response = getRedirectResponse(redirectTo);
+                request.setResponse("redirect");
                 break;
             case "/status"://statistics
                 response = getStatisticResponse();
+                request.setResponse(STATISTICS_PAGE);
                 break;
             default:
                 response = getNotFoundResponse();
+                request.setResponse(NOT_FOUND_PAGE);
         }
 
         request.setSendBytes(response == null ? 0 : response.content().toString().length());//???
@@ -67,7 +76,7 @@ public class RequestHandler {
         log.info("--------------------");
 
         return new DefaultFullHttpResponse(HTTP_1_1, OK,
-                Unpooled.copiedBuffer(table, CharsetUtil.US_ASCII));
+                Unpooled.copiedBuffer(table, CYRILLIC_CHARSET));
     }
 
     private FullHttpResponse getIndexPageResponse() {
@@ -76,7 +85,7 @@ public class RequestHandler {
         log.info("--------------------");
 
         return new DefaultFullHttpResponse(HTTP_1_1, OK,
-                Unpooled.copiedBuffer(table, CharsetUtil.US_ASCII));
+                Unpooled.copiedBuffer(table, DEFAULT_CHARSET));
     }
 
     private FullHttpResponse getStatisticResponse() {
@@ -85,7 +94,7 @@ public class RequestHandler {
         log.info("--------------------");
 
         return new DefaultFullHttpResponse(HTTP_1_1, OK,
-                Unpooled.copiedBuffer(table, CharsetUtil.US_ASCII));
+                Unpooled.copiedBuffer(table, DEFAULT_CHARSET));
     }
 
     private String getHtmlResponse(String body, String pageName) {
@@ -101,7 +110,7 @@ public class RequestHandler {
         log.info("--------------------");
 
         return new DefaultFullHttpResponse(HTTP_1_1, OK,
-                Unpooled.copiedBuffer(hello, CharsetUtil.US_ASCII));
+                Unpooled.copiedBuffer(hello, DEFAULT_CHARSET));
     }
 
     private FullHttpResponse getNotFoundResponse() {
@@ -110,7 +119,7 @@ public class RequestHandler {
         log.info("--------------------");
 
         return new DefaultFullHttpResponse(HTTP_1_1, NOT_FOUND,
-                Unpooled.copiedBuffer(hello, CharsetUtil.US_ASCII));
+                Unpooled.copiedBuffer(hello, DEFAULT_CHARSET));
     }
 
     private FullHttpResponse getRedirectResponse(String url) {

@@ -1,5 +1,6 @@
 package some.domain.handler;
 
+import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import some.domain.model.Client;
@@ -11,16 +12,22 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Pages {
+    private static final Logger log = Logger.getLogger(Pages.class);
+
     public static final String DATE_TIME_PATTERN = "dd-MM-yyyy HH:mm";
     public static final int LIMIT_PROCESSED_CONNECTIONS = 16;
-
-    public static final String HELLO_TEMPLATE = "Hello, World!";
-    public static final String NOT_FOUND_TEMPLATE = "404. Not found.";
+    //pages
     public static final String INDEX_PAGE = "Welcome!";
     public static final String HELLO_PAGE = "hello";
-    public static final String INFO_PAGE = "About app";
+    public static final String INFO_PAGE = "About server";
     public static final String STATISTICS_PAGE = "Server statistics";
     public static final String NOT_FOUND_PAGE = "404. Not Found";
+    //templates
+    public static final String HELLO_TEMPLATE = "Hello, World!";
+    public static final String NOT_FOUND_TEMPLATE = "404. Not found.";
+    public static final String ABOUT_TEMPLATE = getInfoPage();
+    public static final String INDEX_TEMPLATE = getIndexPage();
+
 
 
     public static String htmlTemplate(String pageName){
@@ -86,8 +93,9 @@ public class Pages {
     }
 
     public static String getIndexPage() {
-        StringBuilder result = new StringBuilder("<h1>Welcome to simple http-server!</h1><br/>\n")
+        return (new StringBuilder("<h1>Welcome to simple http-server!</h1><br/>\n")
                 .append("<div class=\"list-group\"><b>Go to... </b>")
+                        //links
                 .append("<a href=\"/info\" class=\"list-group-item\">Info page</a>")
                 .append("<a href=\"/hello\" class=\"list-group-item\">Helloworld page</a>")
                 .append("<a href=\"/status\" class=\"list-group-item\">Statistics page</a>")
@@ -101,29 +109,67 @@ public class Pages {
                 .append("<a href=\"/redirect?url=www.linkedin.com/profile/view?id=226275019&locale=en_US\" class=\"list-group-item\" target=_blank>LinkedIn profile</a>")
                 .append("<a href=\"/redirect?url=www.hamstercoders.com/\" class=\"list-group-item\" target=_blank>HamsterCoders</a>")
                 .append("</div>")
-                        .append("<br/>\n")
-
-                //.append("</div>\n")
-                ;
-
-
-        return result.toString();
+                .append("<br/>\n")
+        ).toString();
     }
 
-    public static String getInfoPage() {
-        StringBuilder result = new StringBuilder("<h1>About this http-server</h1><br/>")
-                .append("<br/>")
-                .append("<div><b>todo... </b>")
-                .append("<br/>")
-//                .append("<a href=\"/info\">Info page</a>")
-//                .append("<br/>")
-//                .append("<a href=\"/hello\">Helloworld page</a>")
-//                .append("<br/>")
-//                .append("<a href=\"/redirect\">Redirect page</a>")
-//                .append("<br/>")
-//                .append("<a href=\"/status\">Statistics page</a>")
-                .append("</div>");
-        return result.toString();
+    public static String getInfoPage()  {
+
+        String result = (new StringBuilder("<h1>About this http-server</h1><br/>")
+                .append("<div class=\"container\">\n")
+                .append("<h3>Task</h3>\n")
+                .append("    <p align=\"justify\">Необходимо реализовать http-сервер на фреймворке\n")
+                .append("        <a href=\"redirect?url=www.netty.io/\" target=\"_blank\">Netty</a>, со следующим функционалом:</p>\n")
+                .append("    <ol>\n")
+                .append("        <li>По запросу на <i>http://somedomain/hello</i> отдает «Hello World» через 10 секунд</li>\n")
+                .append("        <li>По запросу на <i>http://somedomain/redirect?url=[url]</i> происходит переадресация на указанный url</li>\n")
+                .append("        <li>По запросу на <i>http://somedomain/status</i> выдается статистика\n")
+                .append("            <ul>\n")
+                .append("                <li> общее количество запросов  </li>\n")
+                .append("                <li>количество уникальных запросов (по одному на IP)</li>\n")
+                .append("                <li>счетчик запросов на каждый IP в виде таблицы с колонкам и IP,\n")
+                .append("                    кол-во запросов, время последнего запроса</li>\n")
+                .append("                <li>количество переадресаций по url'ам  в виде таблицы, с колонками\n")
+                .append("                    url, кол-во переадресация</li>\n")
+                .append("                <li>количество соединений, открытых в данный момент</li>\n")
+                .append("                <li>в виде таблицы лог из 16 последних обработанных соединений, колонки\n")
+                .append("                    src_ip, URI, timestamp,  sent_bytes, received_bytes, speed (bytes/sec)</li>\n")
+                .append("            </ul>\n")
+                .append("        </li>\n")
+                .append("    </ol>\n")
+                .append("    <p>\n")
+                .append("        Все это (вместе с особенностями имплементации в текстовом виде)\n")
+                .append("        выложить на github, приложить к этому:\n")
+                .append("        <ul>\n")
+                .append("            <li>скриншоты как выглядят станицы /status в рабочем приложении</li>\n")
+                .append("            <li>скриншот результата выполнения команды <b>ab – c 100 – n 10000\n")
+                .append("                http://somedomain/status</b> (примечaние:\n")
+                .append("                <a href=\"redirect?url=httpd.apache.org/docs/2.2/programs/ab.html\" target=\"_blank\">ab</a>)</li>\n")
+                .append("            <li>еще один скриншот станицы /status, но уже после выполнение команды\n")
+                .append("                <b>ab</b> из предыдущего пункта</li>\n")
+                .append("        </ul>\n")
+                .append("    </p>\n")
+                .append("    <p>\n")
+                .append("        Комментарии:\n")
+                .append("        <ul>\n")
+                .append("            <li>использовать самую последнюю стабильную версию netty</li>\n")
+                .append("            <li>обратить внимание на многопоточность</li>\n")
+                .append("            <li>разобраться в EventLoop’ами netty</li>\n")
+                .append("            <li>приложение должно собираться Maven'ом</li>\n")
+                .append("            <li>все файлы должны быть в UTF8, перенос строки \\n</li>\n")
+                .append("        </ul>\n")
+                .append("    </p>\n")
+                .append("    <h3>Реализация</h3>\n")
+                .append("    <p>\n")
+                .append("        Описана в\n")
+                .append("        <a href=\"/redirect?url=www.github.com/LamronNu/netty-http-server\" target=\"_blank\">исходниках</a> гитхаба: \n")
+                .append("        <a href=\"/redirect?url=www.github.com/LamronNu/netty-http-server/wiki/2.-Implementation\" target=\"_blank\">тут</a> (реализация)\n")
+                .append("        и <a href=\"/redirect?url=www.github.com/LamronNu/netty-http-server/wiki/3.-Screenshots\" target=\"_blank\">тут</a> (скриншоты).\n")
+                .append("    </p>\n")
+                .append("</div>")
+        )
+                    .toString();
+        return result;
     }
 
     public static String getStatisticTable() {
@@ -135,21 +181,21 @@ public class Pages {
                 .append(formatDateTime(statistics.getStartOn()))
                 .append("</p>\n")
 //                .append("<hr>\n")
-        /* - ����� ���������� ��������*/
+        /* - общее количество запросов*/
                 .append("<p><b>Total request`s count: </b>\n")
                 .append(statistics.getRequests().size())
-                .append("</p>")/* - ���������� ���������� �������� (�� ������ �� IP)*/
+                .append("</p>")/* - количество уникальных запросов (по одному на IP)*/
                 .append("<p><b>Total unique request`s count: </b>\n")
                 .append(statistics.getUniqueRequests().size())
                 .append("</p>\n")
-        /* - ���������� ����������, �������� � ������ ������*/
+        /* - количество соединений, открытых в данный момент*/
                 .append("<p><b>Open connections: </b>\n")
                 .append(statistics.getOpenConnections())//.size())//???
                 .append("</p>\n")
 //                .append("<hr>\n");
 //                .append("<hr>\n")
-        /* - ������� �������� �� ������ IP � ���� ������� � �������� � IP,
-             ���-�� ��������, ����� ���������� �������*/
+        /* - счетчик запросов на каждый IP в виде таблицы с колонкам и IP,
+             кол-во запросов, время последнего запроса*/
                 .append("<p>Table 1. <b>Request`s details table: </b>\n")
                 .append("</p>\n")
                 .append("<table class=\"table table-bordered table-hover table-striped\"><tr>")
@@ -172,12 +218,13 @@ public class Pages {
         }
         result.append("</table>\n")
 //                .append("<hr>\n")
-        /* - ���������� ������������� �� url'��  � ���� �������, � ���������
-            url, ���-�� �������������*/
+        /* - количество переадресаций по url'ам  в виде таблицы, с колонками
+            url, кол-во переадресация*/
                 .append("<p>Table 2. <b>Redirect`s details table: </b>\n")
-                .append("</p>\n")     //--1---------------2---------------3------------------4------------
-                .append("<table class=\"table table-bordered table-hover table-striped\"><tr><th>#</th><th>redirect to</th><th>count</th><th>last date</th></tr>\n")
-        ;
+                .append("</p>\n")
+                .append("<table class=\"table table-bordered table-hover table-striped\"><tr>")
+                .append("<th>#</th><th>redirect to</th><th>count</th><th>last date</th></tr>\n")
+        ;                //--1---------------2---------------3------------------4------------
         i = 0;
         for (ClientRequest redirect : statistics.getUniqueRedirects().keySet()){
             i++;
@@ -193,13 +240,13 @@ public class Pages {
         }
         result.append("</table>\n")
 
-        /* - � ���� ������� ��� �� 16 ��������� ������������ ����������, �������
+        /* - в виде таблицы лог из 16 последних обработанных соединений, колонки
             src_ip, URI, timestamp,  sent_bytes, received_bytes, speed (bytes/sec)        */
                 .append("<p>Table 3. <b>Log of last 16 requests: </b>\n")
-                .append("</p>\n")     //--1----------2----------3------------------4------------
+                .append("</p>\n")                                                           //--1----------2----------3------------------4------------
                 .append("<table class=\"table table-bordered table-hover table-striped\"><tr><th>#</th><th>ip</th><th>uri</th><th>date-time</th>")
-                .append("<th>send bytes</th><th>receive bytes</th><th>time spent, sec</th><th>speed, bytes/sec</th></tr>\n")
-        ;                       //--5---------------6-------------------7------------
+                .append("<th>response</th><th>send bytes</th><th>receive bytes</th><th>time spent, sec</th><th>speed, bytes/sec</th></tr>\n")
+        ;                    //--5---------------6-------------------7----------------------8------------------------9----------
         i = 0;
         List<ClientRequest> reverseRequests = new LinkedList<>(statistics.getRequests());
         Collections.reverse(reverseRequests);
@@ -214,13 +261,15 @@ public class Pages {
                     .append("</td>\n<td>")
                     .append(formatDateTime(request.getDateTime()))//4
                     .append("</td>\n<td>")
-                    .append(request.getSendBytes()) //5
+                    .append(request.getResponse()) //5
                     .append("</td>\n<td>")
-                    .append(request.getReceivedBytes())  //6
+                    .append(request.getSendBytes()) //6
                     .append("</td>\n<td>")
-                    .append(formatTime(request.getTimeSpent()))//7
+                    .append(request.getReceivedBytes())  //7
                     .append("</td>\n<td>")
-                    .append(String.format("%.2f", request.getSpeed()))//8
+                    .append(formatTime(request.getTimeSpent()))//8
+                    .append("</td>\n<td>")
+                    .append(String.format("%.2f", request.getSpeed()))//9
                     .append("</td>\n</tr>");
 
             if (i >= LIMIT_PROCESSED_CONNECTIONS)

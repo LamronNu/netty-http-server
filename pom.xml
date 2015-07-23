@@ -10,6 +10,10 @@
     <version>1.0</version>
     <packaging>jar</packaging>
 
+    <properties>
+        <encoding>UTF-8</encoding>
+    </properties>
+
 
     <dependencies>
         <dependency>
@@ -40,7 +44,7 @@
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
-                    <encoding>Cp1252</encoding>
+                    <encoding>${encoding}</encoding>
                 </configuration>
             </plugin>
 <!--deploy-->
@@ -66,6 +70,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>2.3</version>
                 <configuration>
                     <archive>
                         <manifest>

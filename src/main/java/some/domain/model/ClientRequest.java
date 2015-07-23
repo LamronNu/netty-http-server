@@ -19,6 +19,10 @@ public class ClientRequest {
     private Double speed;//???????
     private long timeSpent;
 
+
+
+    private String response;
+
     public ClientRequest(String fullUrl) {
         if (fullUrl == null || "".equals(fullUrl))
             throw new IllegalArgumentException("url can't be empty!");
@@ -29,6 +33,7 @@ public class ClientRequest {
         this.fullUrl = fullUrl;
         this.dateTime = new DateTime();//current time
         this.redirectTo = "";
+        this.response = "";
         this.receivedBytes = 0;
         this.sendBytes = 0;
         this.speed = 0.;
@@ -110,5 +115,13 @@ public class ClientRequest {
     public void fixTimeSpent(){
         long diff = new DateTime().getMillis() - dateTime.getMillis();
         this.timeSpent = diff == 0 ? 1 : diff;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
+    }
+
+    public String getResponse() {
+        return response;
     }
 }
